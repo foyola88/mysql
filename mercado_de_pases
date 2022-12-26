@@ -63,3 +63,5 @@ ALTER TABLE negociaciones
 ADD FOREIGN KEY (ID_Agente) REFERENCES Agentes(ID_Agente);
 ALTER TABLE negociaciones
 ADD FOREIGN KEY (ID_Club) REFERENCES Clubes(ID_Club);
+ALTER TABLE jugadores ALTER COLUMN Cant_de_Goles SET DEFAULT 0;
+ALTER TABLE jugadores ALTER COLUMN Cant_de_Partidos SET DEFAULT 0;
