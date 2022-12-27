@@ -44,7 +44,7 @@ CREATE table Negociaciones(
             ID_Club INT NOT NULL,
             Nombre_Club VARCHAR(100) NOT NULL,
             Salario_Ofrecido FLOAT NOT NULL,
-            Aceptada_SI_NO BIT);
+            Aceptada_SI_NO VARCHAR(10));
 -- Creación de llaves foráneas Tabla Jugadores
 ALTER TABLE Jugadores
 ADD FOREIGN KEY (ID_Club) REFERENCES Clubes(ID_Club);
