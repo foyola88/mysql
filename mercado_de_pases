@@ -66,7 +66,123 @@ ADD FOREIGN KEY (ID_Club) REFERENCES Clubes(ID_Club);
 ALTER TABLE jugadores ALTER COLUMN Cant_de_Goles SET DEFAULT 0;
 ALTER TABLE jugadores ALTER COLUMN Cant_de_Partidos SET DEFAULT 0;
 
+-- Insertar registros en Tabla Agentes
+INSERT INTO agentes (ID_Agente, Nombre_Agente, País) 
+VALUES 
+		(1, 'Piero Dalmas', 'Italia'),
+		(2, 'Hugo Avayu', 'Argentina'),
+		(3, 'Tony García', 'Argentina'),
+		(4, 'Amanda Flores', 'Brasil'),
+		(5, 'Venancio Rossi', 'Argentina'),
+		(6, 'Rosa Venanci', 'Uruguay'),
+		(7, 'Heriberto Diaz Velez', 'Brasil'),
+		(8, 'Angel Gallardo', 'Venezuela'),
+		(9, 'Diego Rodriguez', 'Argentina'),
+		(10, 'Diego Fernandez', 'Argentina'),
+		(11, 'Fermín Oyula', 'Argentina'),
+		(12, 'Flash Martinelli', 'Argentina'),
+		(13, 'Roberto Diez', 'Brasil');
+		
+-- Insertar registros en Tabla Clubes
+INSERT INTO agentes (ID_Club, Nombre_Club, País, ID_Liga, Liga) 
+VALUES 
+		(1, 'Fiorentina', 'Italia', 1, 'Serie A Italia'),
+		(2, 'Roma', 'Italia', 1, 'Serie A Italia'),
+		(3, 'Argentinos Juniors', 'Argentina', 2, 'Primera Division Argentina'),
+		(4, 'Boca Juniors', 'Argentina', 2, 'Primera Division Argentina'),
+		(5, 'Independiente', 'Argentina', 2, 'Primera Division Argentina'),
+		(6, 'Emelec', 'Ecuador', 3, 'Serie A Ecuador'),
+		(7, 'Universidad de Chile', 'Chile', 4, 'Primera Division Chile'),
+		(8, 'Herenveen', 'Paises Bajos', 5, 'Eredivisie'),
+		(9, 'Borussia Dortmund', 'Alemania', 6, 'Bundesliga'),
+		(10, 'Parma', 'Italia', 1, 'Serie A Italia'),
+		(11, 'River Plate', 'Argentina', 2, 'Primera Division Argentina'),
+		(12, 'Brown de Adrogue', 'Argentina', 7, 'Primera Nacional Argentina'),
+		(13, 'Rampla Juniors', 'Uruguay', 8, 'Primera Division Uruguay'),
+		(14, 'Atletico Medellin', 'Colombia', 9, 'Primera A Colombia'),
+		(15, 'Caracas', 'Venezuela', 10, 'Primera Division Venezuela'),
+		(16, 'Atlanta', 'Argentina', 7, 'Primera Nacional Argentina');
 
+-- Insertar registros en Tabla Jugadores
+INSERT INTO jugadores (ID_Jugador, Nombre_Jugador, País, Posición, Fecha_de_Nac, ID_Club, ID_Agente, Situación_Contractual, Salario_Anual_USD, Cant_de_Partidos, Cant_de_Goles) 
+VALUES 
+		(1, 'Edwin Dallesio', 'Colombia', 'Arquero', '1988-03-18', 1, 4, 'Con Contrato', 100000, 501, 0),
+		(2, 'Marco Perez', 'Colombia', Defensor', '2001-07-11', Null, 4, 'Libre', 0, 51, 3),
+		(3, 'Juan Rivarola', 'Argentina', 'Volante', '1999-01-11', Null, 4, 'Libre', 0, 108, 9),
+		(4, 'John Durgess', 'Escocia', 'Delantero', '1995-12-12', 4, 7, 'A Prestamo', 20000, 231, 66),
+		(5, 'Benedict Benedicto', 'Polonia', 'Arquero', '1998-11-15', Null, Null, 'Libre', 0, 0, 0),
+		(6, 'Paulo Castellobianco', 'Italia', 'Defensor', '2000-04-13', Null, 8, 'Libre', 0, 77, 1),
+		(7, 'Juan David Venestrola', 'Venezuela', 'Volante', '2004-04-15', Null, 3, 'Libre', 0, 0, 0),
+		(8, 'Fernando Dignez', 'Argentina', 'Delantero', '2003-06-10', 15, Null, 'Con Contrato', 80000, 8, 5),
+		(9, 'Rodrigo de John', 'Argentina', 'Arquero', '2005-09-11', Null, 5, 'Libre', 0, 0, 0),
+		(10, 'Victor Manuel', 'Guatemala', 'Defensor', '2001-09-11', Null, 1, 'Libre', 0, 10, 0),
+		(11, 'Roberto Quintero', 'Bolivia', 'Volante', '2000-06-14', Null, Null, 'Libre', 0, 100, 21),
+		(12, 'Rulfo Diaz', 'Peru', 'Delantero', '2000-01-15', Null, Null, 'Libre', 0, 88, 34),
+		(13, 'Juan Carlos Bangarulo', 'Argentina', 'Arquero', '1998-08-18', Null, 10, 'Libre', 0, 156, 0),
+		(14, 'Hernan Rodriguez', 'Argentina', 'Defensor', '2002-04-14', 12, 10, 'Con Contrato', 90000, 41, 4),
+		(15, 'Marcos Manuel Marcas', 'Uruguay', 'Volante', '1999-03-18', Null, Null, 'Libre', 0, 131, 9),
+		(16, 'Giovanni Colpocorto', 'Italia', 'Delantero', '2005-10-12', Null, Null, 'Libre', 0, 0, 0),
+		(17, 'Gabriel Guidino', 'Argentina', 'Arquero', '2001-12-13', Null, 2, 'Libre', 0, 0, 0),
+		(18, 'Miroslav Milosevic', 'Serbia', 'Defensor', '1999-10-17', Null, Null, 'Libre', 0, 77, 8),
+		(19, 'Brent Ford', 'Inglaterra', 'Volante', '1991-11-18', 11, 6, 'A Prestamo', 30000, 401, 88),
+		(20, 'Stuart Murdoch', 'Escocia', 'Delantero', '1996-11-11', Null, 9, 'Libre', 0, 250, 101),
+		(21, 'Babe Ruth', 'Italia', 'Delantero', '2001-12-24', 11, 9, 'Con Contrato', 90000, 12, 6),
+		(22, 'Bugs Bunny', 'Italia', 'Delantero', '2001-12-25', 11, 9, 'Con Contrato', 90000, 12, Null);
+		
+-- Insertar registros en Tabla Ligas
+INSERT INTO ligas (ID_Liga, Nombre_Liga, Confederación, País) 
+VALUES 
+		(1, 'Serie A Italia', 'UEFA', 'Italia'),
+		(2, 'Primera Division Argentina', 'Conmebol', 'Argentina'),
+		(3, 'Serie A Ecuador', 'Conmebol', 'Ecuador'),
+		(4, 'Primera Division Chile', 'Conmebol', 'Chile'),
+		(5, 'Eredivisie', 'UEFA', 'Paises Bajos'),
+		(6, 'Bundesliga', 'UEFA', 'Alemania'),
+		(7, 'Primera Nacional Argentina', 'Conmebol', 'Argentina'),
+		(8, 'Primera Division Uruguay', 'Conmebol', 'Uruguay'),
+		(9, 'Primera A Colombia', 'Conmebol', 'Colombia'),
+		(10, 'Primera Division Venezuela', 'Conmebol', 'Venezuela'),
+		(11, 'Premier League', 'UEFA', 'Inglaterra');
+
+-- Insertar registros en Tabla Negociaciones
+INSERT INTO negociaciones (ID_Negociación, ID_Jugador, Fecha, ID_Agente, ID_Club, Nombre_Club, Salario_Ofrecido, aceptada_si_no) 
+VALUES 
+		(1, 1, '2022-12-01', 4, 1, 'Fiorentina', 100000, 'SI'),
+		(2, 1, '2022-12-01', 4, 8, 'Herenveen', 250000, 'NO'),
+		(3, 2, '2022-12-01', 4, 4, 'Boca Juniors', 307000, 'SI'),
+		(4, 17, '2022-12-01', 2, 13, 'Rampla Juniors', 111000, 'NO'),
+		(5, 7, '2022-12-01', 3, 4, 'Boca Juniors', 74000, 'NO'),
+		(6, 6, '2022-12-01', 8, 2, 'Roma', 1000000, 'NO'),
+		(7, 1, '2022-12-01', 4, 9, 'Borussia Dortmund', 1000000, 'SI'),
+		(8, 6, '2022-12-01', 8, 1, 'Fiorentina', 307000, 'SI'),
+		(9, 6, '2022-12-01', 8, 4, 'Boca Juniors', 99874, 'SI'),
+		(10, 4, '2022-12-01', 7, 11, 'River Plate', 123901, 'SI'),
+		(11, 3, '2022-12-01', 4, 11, 'River Plate', 100000, 'NO'),
+		(12, 13, '2022-12-01', 10, 11, 'River Plate', 299999, 'NO'),
+		(13, 10, '2022-12-01', 1, 6, 'Emelec', 299999, 'NO'),
+		(14, 10, '2022-12-01', 1, 7, 'Universidad de Chile', 299999, 'SI'),
+		(15, 9, '2022-12-01', 5, 14, 'Atletico Medellin', 74000, 'SI'),
+		(16, 17, '2022-12-01', 2, 15, 'Caracas', 74000, 'SI'),
+		(17, 14, '2022-12-01', 10, 12, 'Brown de Adrogue', 100000, 'NO'),
+		(18, 4, '2022-12-01', 7, 12, 'Brown de Adrogue', 18888, 'SI'),
+		(19, 19, '2022-12-01', 6, 14, 'Atletico Medellin', 1787777, 'SI'),
+		(20, 19, '2022-12-01', 6, 15, 'Caracas', 250000, 'NO'),
+		(21, 19, '2022-12-01', 6, 15, 'Caracas', 300000, 'SI');
+		
+-- Insertar registros en Tabla Videos
+INSERT INTO videos (ID_Video, Nombre_Video, Link, ID_Jugador, Nombre_Jugador)
+VALUES
+		(1, 'Atajadas Edwin Dallesio', 'https://youtube.com/21i3ugbaskbdas', 1, 'Edwin Dallesio'),
+		(2, 'Penales Edwin Dallesio', 'https://youtube.com/12iu34', 1, 'Edwin Dallesio''),
+		(3, 'Goles Fernando Dignez', 'https://youtube.com/obnsauoh12', 8, 'Fernando Dignez'),
+		(4, 'Regates Fernando Dignez', 'https://youtube.com/1ij24b12i', 8, 'Fernando Dignez'),
+		(5, 'Goles Rulfo Diaz', 'https://youtube.com/uobui123123', 12, 'Rulfo Diaz'),
+		(6, 'Quites Gabriel Guidino', 'https://youtube.com/89sd78f', 17, 'Gabriel Guidino'),
+		(7, 'Goles Gabriel Guidino', 'https://youtube.com/5jh3v54uy', 17, 'Gabriel Guidino'),
+		(8, 'Pases Brent Ford', 'https://youtube.com/12bibibg', 19, 'Brent Ford'),
+		(9, 'Centros Stuart Murdoch', 'https://youtube.com/75sd5jb', 20, 'Stuart Murdoch'),
+		(10, 'Pases Stuart Murdoch', 'https://youtube.com/sdfyivc6521', 20, 'Stuart Murdoch'),
+		(11, 'Goles Stuart Murdoch', 'https://youtube.com/sdfyivc6522', 20, 'Stuart Murdoch');
 
 -- Usar schema mercado de pases
 USE mercado_de_pases;
