@@ -65,3 +65,118 @@ ALTER TABLE negociaciones
 ADD FOREIGN KEY (ID_Club) REFERENCES Clubes(ID_Club);
 ALTER TABLE jugadores ALTER COLUMN Cant_de_Goles SET DEFAULT 0;
 ALTER TABLE jugadores ALTER COLUMN Cant_de_Partidos SET DEFAULT 0;
+
+
+
+-- Usar schema mercado de pases
+USE mercado_de_pases;
+
+-- Vista 1
+-- Crear vista Arqueros que usan la aplicación
+CREATE VIEW Arqueros AS
+	(SELECT 
+    Nombre_Jugador as Nombre
+    , País
+	, Cant_de_Partidos as Partidos
+    from Jugadores
+    where Posición = "Arquero"
+    );
+-- Realizar consulta de la vista Arqueros
+SELECT * from Arqueros;
+
+-- Vista 2
+-- Crear vista clubes de Argentina
+CREATE VIEW Clubes_Argentinos AS
+	(SELECT 
+    Nombre_Club as Club
+    , Liga
+    from Clubes
+    where País = "Argentina"
+    );
+-- Realizar consulta de la vista Clubes_Argentinos
+SELECT * from Clubes_Argentinos;
+
+-- Vista 3
+-- Crear vista Ranking Goleadores
+CREATE VIEW Ranking_Goleadores AS
+	(SELECT 
+    Nombre_Jugador as Nombre
+    , Posición
+    , Cant_de_Goles as Goles
+    from Jugadores
+    ORDER BY Goles DESC
+    );
+-- Realizar consulta de la vista Ranking_Goleadores
+SELECT * from Ranking_Goleadores;
+
+-- Vista 4
+-- Crear vista Jugadores con más de 100 partidos
+CREATE VIEW Jugadores_Experimentados AS
+	(SELECT 
+    Nombre_Jugador as Nombre
+    , Posición
+    , Cant_de_Partidos as Partidos
+    from Jugadores
+    WHERE Cant_de_Partidos > 100
+    ORDER BY Partidos DESC
+    );
+-- Realizar consulta de la vista Jugadores_Experimentados
+SELECT * from Jugadores_Experimentados;
+
+-- Vista 5
+-- Crear vista Negociaciones Aceptadas
+CREATE VIEW Negociaciones_Aceptadas AS
+	(SELECT 
+    ID_Negociación as Negociación
+    , Nombre_Jugador as Nombre
+    , aceptada_si_no as Resultado
+    from Negociaciones n
+	JOIN Jugadores j ON (n.ID_Jugador = j.ID_Jugador)
+    WHERE aceptada_si_no = "SI"
+    );
+-- Realizar consulta de la vista Jugadores_Experimentados
+SELECT * from Negociaciones_Aceptadas;
+
+-- usar schema mercado_de_pases
+USE mercado_de_pases;
+
+-- Función 1
+-- Crear función Promedio de Gol
+DELIMITER $$
+CREATE FUNCTION Promedio_de_Gol (
+	 ID_Goleador INT)
+     RETURNS FLOAT
+NO SQL
+BEGIN
+	DECLARE Promedio FLOAT;
+    SET Promedio = (
+	SELECT (Cant_de_Goles/Cant_de_Partidos)
+	FROM jugadores
+    WHERE ID_Jugador = ID_Goleador );
+	RETURN Promedio ;
+END;
+$$ ;
+
+-- Llamar Función
+SELECT Promedio_de_Gol(2);
+
+-- Función 2
+-- Crear función Buscar Nombre Agente
+DELIMITER $$
+CREATE FUNCTION Buscar_Agente (
+	 ID_Agente_Buscado INT)
+     RETURNS VARCHAR(50)
+DETERMINISTIC
+BEGIN
+	DECLARE Nombre VARCHAR(50);
+    SET Nombre = (
+	SELECT 
+		Nombre_Agente
+	FROM agentes
+    WHERE ID_Agente = ID_Agente_Buscado );
+	RETURN Nombre ;
+END;
+$$ ;
+
+-- Llamar Función
+SELECT Buscar_Agente(6);
