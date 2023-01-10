@@ -5,46 +5,46 @@ USE mercado_de_pases;
 -- Creación de tablas del esquema Mercado de Pases
 CREATE table jugadores(
 			ID_Jugador INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            Nombre_Jugador VARCHAR(50) NOT NULL,
-            País VARCHAR(30) NOT NULL,
-            Posición VARCHAR(30) NOT NULL,
-            Fecha_de_Nac DATE NOT NULL,
-            ID_Club INT,
-            ID_Agente INT,
-            Situación_Contractual VARCHAR(30) NOT NULL,
-            Salario_Anual_USD FLOAT,
-            Cant_de_Partidos INT,
-            Cant_de_Goles INT);
+            		Nombre_Jugador VARCHAR(50) NOT NULL,
+            		País VARCHAR(30) NOT NULL,
+           		Posición VARCHAR(30) NOT NULL,
+            		Fecha_de_Nac DATE NOT NULL,
+           		ID_Club INT,
+            		ID_Agente INT,
+            		Situación_Contractual VARCHAR(30) NOT NULL,
+            		Salario_Anual_USD FLOAT,
+            		Cant_de_Partidos INT,
+            		Cant_de_Goles INT);
 CREATE table Agentes(
 			ID_Agente INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            Nombre_Agente VARCHAR(50) NOT NULL,
-            País VARCHAR(30) NOT NULL);
+            		Nombre_Agente VARCHAR(50) NOT NULL,
+            		País VARCHAR(30) NOT NULL);
 CREATE table Clubes(
 			ID_Club INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            Nombre_Club VARCHAR(100) NOT NULL,
-            País VARCHAR(30) NOT NULL,
-            ID_Liga INT NOT NULL,
-            Liga VARCHAR(50) NOT NULL);
+            		Nombre_Club VARCHAR(100) NOT NULL,
+            		País VARCHAR(30) NOT NULL,
+            		ID_Liga INT NOT NULL,
+            		Liga VARCHAR(50) NOT NULL);
 CREATE table Ligas(
 			ID_Liga INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            Nombre_Liga VARCHAR(50) NOT NULL,
-            Confederación VARCHAR(50) NOT NULL,
-            País VARCHAR(30) NOT NULL);
+            		Nombre_Liga VARCHAR(50) NOT NULL,
+            		Confederación VARCHAR(50) NOT NULL,
+            		País VARCHAR(30) NOT NULL);
 CREATE table Videos(
 			ID_Video INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            Nombre_Video VARCHAR(200) NOT NULL,
-            Link VARCHAR(2048) NOT NULL,
-            ID_Jugador INT NOT NULL,
-            Nombre_Jugador VARCHAR(50) NOT NULL);
+            		Nombre_Video VARCHAR(200) NOT NULL,
+            		Link VARCHAR(2048) NOT NULL,
+            		ID_Jugador INT NOT NULL,
+            		Nombre_Jugador VARCHAR(50) NOT NULL);
 CREATE table Negociaciones(
 			ID_Negociación INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            ID_Jugador INT NOT NULL,
-            Fecha DATE NOT NULL,
-            ID_Agente INT NOT NULL,
-            ID_Club INT NOT NULL,
-            Nombre_Club VARCHAR(100) NOT NULL,
-            Salario_Ofrecido FLOAT NOT NULL,
-            Aceptada_SI_NO VARCHAR(10));
+            		ID_Jugador INT NOT NULL,
+            		Fecha DATE NOT NULL,
+            		ID_Agente INT NOT NULL,
+            		ID_Club INT NOT NULL,
+            		Nombre_Club VARCHAR(100) NOT NULL,
+           		Salario_Ofrecido FLOAT NOT NULL,
+            		Aceptada_SI_NO VARCHAR(10));
 -- Creación de llaves foráneas Tabla Jugadores
 ALTER TABLE Jugadores
 ADD FOREIGN KEY (ID_Club) REFERENCES Clubes(ID_Club);
