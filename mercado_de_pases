@@ -296,3 +296,39 @@ $$ ;
 
 -- Llamar Función
 SELECT Buscar_Agente(6);
+
+-- Crear Stored Procedure 1 Tabla de Máximos Goleadores entre los Jugadores
+DELIMITER $$
+CREATE PROCEDURE sp_goleadores (IN campo VARCHAR(50), tipo VARCHAR(5))
+BEGIN
+	DECLARE campo_orden VARCHAR(100);
+    DECLARE tipo_orden VARCHAR(5);
+    DECLARE query_to_execute VARCHAR(200);
+	
+    IF campo <> '' AND tipo <> '' THEN
+		SET campo_orden = concat(' ORDER BY ', campo, tipo);
+	END IF;
+    
+	SET query_to_execute = concat(' SELECT * from jugadores ', campo_orden);
+    
+  SELECT query_to_execute;
+  
+  PREPARE runSP FROM @query_to_execute;
+  EXECUTE runSP;
+  DEALLOCATE PREPARE runSP;
+  END;
+
+CALL sp_goleadores('Cant_de_Goles', ' ASC');
+
+-- Crear Stored Procedure 2 Insertar Nuevo Agente
+DELIMITER $$
+CREATE PROCEDURE sp_insertar_agente (IN param_nombre VARCHAR(50), IN param_pais VARCHAR(30) )
+BEGIN
+	INSERT INTO agentes (Nombre_Agente, País)
+				VALUES (param_nombre, param_pais);
+END;
+$$;
+
+CALL sp_insertar_agente ('Bo Beep', 'Inglaterra');
+
+SELECT * from agentes;
