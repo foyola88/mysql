@@ -297,28 +297,22 @@ $$ ;
 -- Llamar Función
 SELECT Buscar_Agente(6);
 
--- Crear Stored Procedure 1 Tabla de Máximos Goleadores entre los Jugadores
-DELIMITER $$
-CREATE PROCEDURE sp_goleadores (IN campo VARCHAR(50), tipo VARCHAR(5))
-BEGIN
-	DECLARE campo_orden VARCHAR(100);
-    DECLARE tipo_orden VARCHAR(5);
-    DECLARE query_to_execute VARCHAR(200);
-	
-    IF campo <> '' AND tipo <> '' THEN
-		SET campo_orden = concat(' ORDER BY ', campo, tipo);
-	END IF;
-    
-	SET query_to_execute = concat(' SELECT * from jugadores ', campo_orden);
-    
-  SELECT query_to_execute;
-  
-  PREPARE runSP FROM @query_to_execute;
-  EXECUTE runSP;
-  DEALLOCATE PREPARE runSP;
-  END;
+USE mercado_de_pases;
 
-CALL sp_goleadores('Cant_de_Goles', ' ASC');
+-- Crear Stored Procedure 1 Buscar Jugador
+DELIMITER $$
+CREATE PROCEDURE buscar_jugador (IN jugador_buscado VARCHAR(50))
+BEGIN
+	SELECT
+		ID_Jugador,
+        Nombre_Jugador,
+        País
+	FROM jugadores
+    WHERE jugador_buscado = ID_Jugador;
+  END;
+  $$;
+
+CALL buscar_jugador (1);
 
 -- Crear Stored Procedure 2 Insertar Nuevo Agente
 DELIMITER $$
