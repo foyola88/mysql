@@ -82,9 +82,24 @@ VALUES
 		(11, 'Fermín Oyula', 'Argentina'),
 		(12, 'Flash Martinelli', 'Argentina'),
 		(13, 'Roberto Diez', 'Brasil');
-		
+
+-- Insertar registros en Tabla Ligas
+INSERT INTO ligas (ID_Liga, Nombre_Liga, Confederación, País) 
+VALUES 
+		(1, 'Serie A Italia', 'UEFA', 'Italia'),
+		(2, 'Primera Division Argentina', 'Conmebol', 'Argentina'),
+		(3, 'Serie A Ecuador', 'Conmebol', 'Ecuador'),
+		(4, 'Primera Division Chile', 'Conmebol', 'Chile'),
+		(5, 'Eredivisie', 'UEFA', 'Paises Bajos'),
+		(6, 'Bundesliga', 'UEFA', 'Alemania'),
+		(7, 'Primera Nacional Argentina', 'Conmebol', 'Argentina'),
+		(8, 'Primera Division Uruguay', 'Conmebol', 'Uruguay'),
+		(9, 'Primera A Colombia', 'Conmebol', 'Colombia'),
+		(10, 'Primera Division Venezuela', 'Conmebol', 'Venezuela'),
+		(11, 'Premier League', 'UEFA', 'Inglaterra');
+
 -- Insertar registros en Tabla Clubes
-INSERT INTO agentes (ID_Club, Nombre_Club, País, ID_Liga, Liga) 
+INSERT INTO clubes (ID_Club, Nombre_Club, País, ID_Liga, Liga) 
 VALUES 
 		(1, 'Fiorentina', 'Italia', 1, 'Serie A Italia'),
 		(2, 'Roma', 'Italia', 1, 'Serie A Italia'),
@@ -107,7 +122,7 @@ VALUES
 INSERT INTO jugadores (ID_Jugador, Nombre_Jugador, País, Posición, Fecha_de_Nac, ID_Club, ID_Agente, Situación_Contractual, Salario_Anual_USD, Cant_de_Partidos, Cant_de_Goles) 
 VALUES 
 		(1, 'Edwin Dallesio', 'Colombia', 'Arquero', '1988-03-18', 1, 4, 'Con Contrato', 100000, 501, 0),
-		(2, 'Marco Perez', 'Colombia', Defensor', '2001-07-11', Null, 4, 'Libre', 0, 51, 3),
+		(2, 'Marco Perez', 'Colombia', 'Defensor', '2001-07-11', Null, 4, 'Libre', 0, 51, 3),
 		(3, 'Juan Rivarola', 'Argentina', 'Volante', '1999-01-11', Null, 4, 'Libre', 0, 108, 9),
 		(4, 'John Durgess', 'Escocia', 'Delantero', '1995-12-12', 4, 7, 'A Prestamo', 20000, 231, 66),
 		(5, 'Benedict Benedicto', 'Polonia', 'Arquero', '1998-11-15', Null, Null, 'Libre', 0, 0, 0),
@@ -129,21 +144,6 @@ VALUES
 		(21, 'Babe Ruth', 'Italia', 'Delantero', '2001-12-24', 11, 9, 'Con Contrato', 90000, 12, 6),
 		(22, 'Bugs Bunny', 'Italia', 'Delantero', '2001-12-25', 11, 9, 'Con Contrato', 90000, 12, Null);
 		
--- Insertar registros en Tabla Ligas
-INSERT INTO ligas (ID_Liga, Nombre_Liga, Confederación, País) 
-VALUES 
-		(1, 'Serie A Italia', 'UEFA', 'Italia'),
-		(2, 'Primera Division Argentina', 'Conmebol', 'Argentina'),
-		(3, 'Serie A Ecuador', 'Conmebol', 'Ecuador'),
-		(4, 'Primera Division Chile', 'Conmebol', 'Chile'),
-		(5, 'Eredivisie', 'UEFA', 'Paises Bajos'),
-		(6, 'Bundesliga', 'UEFA', 'Alemania'),
-		(7, 'Primera Nacional Argentina', 'Conmebol', 'Argentina'),
-		(8, 'Primera Division Uruguay', 'Conmebol', 'Uruguay'),
-		(9, 'Primera A Colombia', 'Conmebol', 'Colombia'),
-		(10, 'Primera Division Venezuela', 'Conmebol', 'Venezuela'),
-		(11, 'Premier League', 'UEFA', 'Inglaterra');
-
 -- Insertar registros en Tabla Negociaciones
 INSERT INTO negociaciones (ID_Negociación, ID_Jugador, Fecha, ID_Agente, ID_Club, Nombre_Club, Salario_Ofrecido, aceptada_si_no) 
 VALUES 
@@ -173,7 +173,7 @@ VALUES
 INSERT INTO videos (ID_Video, Nombre_Video, Link, ID_Jugador, Nombre_Jugador)
 VALUES
 		(1, 'Atajadas Edwin Dallesio', 'https://youtube.com/21i3ugbaskbdas', 1, 'Edwin Dallesio'),
-		(2, 'Penales Edwin Dallesio', 'https://youtube.com/12iu34', 1, 'Edwin Dallesio''),
+		(2, 'Penales Edwin Dallesio', 'https://youtube.com/12iu34', 1, 'Edwin Dallesio'),
 		(3, 'Goles Fernando Dignez', 'https://youtube.com/obnsauoh12', 8, 'Fernando Dignez'),
 		(4, 'Regates Fernando Dignez', 'https://youtube.com/1ij24b12i', 8, 'Fernando Dignez'),
 		(5, 'Goles Rulfo Diaz', 'https://youtube.com/uobui123123', 12, 'Rulfo Diaz'),
@@ -326,3 +326,75 @@ $$;
 CALL sp_insertar_agente ('Bo Beep', 'Inglaterra');
 
 SELECT * from agentes;
+
+-- Crear Trigger 1 log Nuevos Agentes. Crea registro de quién y cuando dio de alta un nuevo agente, que es el usuario principal de la plataforma. Audita el momento en que fue creado así no hay negociaciones realizadas con ese número de agente antes de su creación.
+
+-- Crear Tabla Log New Agentes
+
+CREATE TABLE new_agentes (
+		ID_new_agente INT AUTO_INCREMENT PRIMARY KEY,
+		ID_Agente INT,
+        Nombre_Agente VARCHAR(50),
+        País VARCHAR(30),
+        create_date TIMESTAMP,
+        user_name VARCHAR(50)
+);
+
+-- Crear Trigger New Agentes
+
+DELIMITER $$
+CREATE TRIGGER tr_insert_new_agente_after
+AFTER INSERT ON agentes
+FOR EACH ROW
+BEGIN
+	INSERT INTO new_agentes (ID_Agente, Nombre_Agente, País, create_date, user_name)
+    VALUES (
+		NEW.ID_Agente, NEW.Nombre_Agente, NEW.País, current_timestamp(), user()
+        );
+END
+$$;
+
+-- Ejemplo Inserción de Datos en Agentes - Log New Agentes
+
+INSERT INTO agentes (ID_Agente, Nombre_Agente, País)
+VALUES (16, 'Beto Camps', 'Brasil');
+INSERT INTO agentes (ID_Agente, Nombre_Agente, País)
+VALUES (17, 'Turu Flores', 'Argentina');
+
+-- Crear Trigger 2 log Actualizar Negociaciones. Audita las modificaciones realizadas sobre las negociaciones así se tiene un registro de cuando se aceptaron o cuando sufrieron modificaciones.
+
+-- Crear Tabla Log Actualización Negociaciones
+
+CREATE TABLE new_negociaciones (
+		ID_new_negociacion INT AUTO_INCREMENT PRIMARY KEY,
+		ID_Negociación INT,
+        ID_Jugador INT,
+        Fecha DATE,
+        ID_Agente INT,
+        ID_Club INT,
+        Nombre_Club VARCHAR(100),
+        Salario_Ofrecido FLOAT,
+        aceptada_si_no VARCHAR(10),
+        create_date TIMESTAMP,
+        user_name VARCHAR(50)
+);
+
+-- Crear Trigger Actualizar Negociaciones
+
+DELIMITER $$
+CREATE TRIGGER tr_update_new_negociacion_before
+BEFORE UPDATE ON negociaciones
+FOR EACH ROW
+BEGIN
+	INSERT INTO new_negociaciones (ID_Negociación, ID_Jugador, Fecha, ID_Agente, ID_Club, Nombre_Club, Salario_Ofrecido, aceptada_si_no, create_date, user_name)
+    VALUES (
+		NEW.ID_Negociación, NEW.ID_Jugador, NEW.Fecha, NEW.ID_Agente, NEW.ID_Club, NEW.Nombre_Club, NEW.Salario_Ofrecido, NEW.aceptada_si_no, current_timestamp(), user()
+        );
+END
+$$;
+
+-- Ejemplo Actualización de Datos en Negociaciones - Log New Negociaciones
+
+UPDATE negociaciones
+	SET aceptada_si_no = "SI"
+WHERE ID_Negociación = 20;
