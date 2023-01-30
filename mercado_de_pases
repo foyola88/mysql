@@ -392,9 +392,3 @@ BEGIN
         );
 END
 $$;
-
--- Ejemplo Actualización de Datos en Negociaciones - Log New Negociaciones
-
-UPDATE negociaciones
-	SET aceptada_si_no = "SI"
-WHERE ID_Negociación = 20;
